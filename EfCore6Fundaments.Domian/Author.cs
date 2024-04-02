@@ -18,7 +18,7 @@ namespace EfCore6Fundaments.Domian
         public string LastName { get; set; }
 
         //Relacion de Uno  Muchos un autor puede escribir muchos libros 
-        public List<Book> Books { get; set;}
+        public List<Book>? Books { get; set;}
 
         
 

@@ -68,6 +68,13 @@ else
 //InsertarAutorConList();
 //InsertNewAuthorWithNewBook();
 //AddNewBookToExitingAuthorInMemory()
+//EagerLoadingBooksWithAuthor()
+//projections();
+//ExplicitLoadCollection();
+//LazyLoadBooksFromAuthor();
+//FilterUsingDataRelated();
+//ModifyingRelatedDataWhenTracked();
+//CascadeDeleteInActionWhenTraked();
 
 
 
@@ -76,6 +83,117 @@ else
 //-------------------------Metodos -------------------------------
 
 //Creando metodos 
+
+
+//cascade delete  in action when traked
+
+void CascadeDeleteInActionWhenTraked()
+{
+    PubContext _context = new PubContext();
+    var author = _context.Authors.Include(a => a.Books)
+        .FirstOrDefault(a => a.AuthorId == 2);
+    _context.Authors.Remove(author);
+
+    var state = _context.ChangeTracker.DebugView.ShortView;
+    _context.SaveChanges();
+
+    Console.WriteLine($"autor{author.FirstName} eliminado");
+}
+
+//modifying related  data 
+
+void ModifyingRelatedDataWhenTracked()
+{
+    PubContext pubContext = new PubContext();
+    var author = pubContext.Authors.Include(a => a.Books)
+        .FirstOrDefault(a => a.AuthorId == 5);
+    author.Books[0].BasePrice = (decimal)12.00;
+
+
+    //pubContext.ChangeTracker.DetectChanges();
+    var newContext = new PubContext();
+    newContext.Books.Update(author.Books[0]);
+
+    var _state = pubContext.ChangeTracker.DebugView.ShortView;
+}
+
+//filtrar  usando  datos relacionados 
+
+void FilterUsingDataRelated()
+{
+    PubContext _context = new PubContext();
+
+    var author = _context.Authors
+        .Where( a => a.Books.Any(b =>b.PublishDate.Year >=2010))
+        .ToList();
+}
+//requiere la configuración de la carga diferida en la aplicación
+
+
+void LazyLoadBooksFromAuthor()
+{
+    PubContext context = new PubContext();
+
+    var author = context.Authors.FirstOrDefault(a => a.LastName == "vazquez");
+    foreach (var b in author.Books)
+    {
+        Console.WriteLine(b.Title);
+    }
+
+}
+
+//carga de datos relacionados para objetos que ya están en memoria
+
+void ExplicitLoadCollection()
+{
+    PubContext _context = new PubContext();
+
+    var author = _context.Authors.FirstOrDefault(
+        a => a.LastName == "Basilio");
+    _context.Entry(author).Collection(a => a.Books).Load();
+
+}
+
+//proyectar datos relacionados en las consultas
+
+void projections ()
+{
+    PubContext _context = new PubContext();
+
+    var tiposDesconocidos = _context.Authors
+        .Select(a => new
+        {
+            Authorid = a.AuthorId,
+            Name = a.FirstName.First() + ""+ a.LastName,
+            Books = a.Books/*.Where(
+                b => b.PublishDate.Year < 2023)
+            .Count()*/
+        })    
+        .ToList();
+
+    var debugView = _context.ChangeTracker.DebugView.ShortView;
+}
+
+
+//carga rápida de datos relacionados en las consultas
+
+
+void EagerLoadingBooksWithAuthor()
+{
+    PubContext _context = new PubContext();
+    // var authors = _context.Authors.Include(a => a.Books).ToList();
+    var pubDateStart = new DateTime(2020, 11, 1);
+    var authors = _context.Authors.
+        Include(a => a.Books
+        .Where(b => b.PublishDate >= pubDateStart)
+        .OrderBy(b => b.Title))
+        .ToList();
+    authors.ForEach(a =>
+    {
+        Console.WriteLine($"{a.LastName}({a.Books.Count})");
+        a.Books.ForEach(b => Console.WriteLine("" + b.Title));
+    });
+}
 
 
 //Agregar nuevo libro  a existente author pero via book 

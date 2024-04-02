@@ -9,7 +9,7 @@ namespace EfCore6Fundaments.Domian
     public  class Book
     {
         public int BookId { get; set; }
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public DateTime PublishDate { get; set; }
         public Decimal BasePrice { get; set; }
 
