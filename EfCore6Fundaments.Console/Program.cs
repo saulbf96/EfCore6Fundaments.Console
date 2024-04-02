@@ -65,7 +65,9 @@ else
 //SortAuthors();
 //EditarAuthores();
 //InsertarAutoresRange();
-InsertarAutorConList();
+//InsertarAutorConList();
+//InsertNewAuthorWithNewBook();
+//AddNewBookToExitingAuthorInMemory()
 
 
 
@@ -74,6 +76,62 @@ InsertarAutorConList();
 //-------------------------Metodos -------------------------------
 
 //Creando metodos 
+
+
+//Agregar nuevo libro  a existente author pero via book 
+
+void AddnewBookToExistingAuthorViaBook()
+{
+    PubContext context = new PubContext();
+    var book = new Book
+    {
+        Title = "Herecules",
+        PublishDate = DateTime.Now,
+        AuthorId = 5
+    };
+
+    //search book
+   // book.Author = context.Authors.Find(5); //known id for hugh  howey 
+    context.Books.Add(book);
+    context.SaveChanges();
+}
+
+//add new book to exist author 
+
+void AddNewBookToExitingAuthorInMemory()
+{
+    PubContext _context = new PubContext();
+    var author = _context.Authors.FirstOrDefault( a => a.LastName == "");
+
+    //validaton 
+    if (author != null)
+    {
+        author.Books.Add(new Book
+        {
+            Title = "Los avengers",
+            PublishDate = new DateTime(1996, 11, 12)
+            
+        }) ;
+        _context.Authors.Add(author);
+
+    }
+    _context.SaveChanges();
+}
+
+//InsertNewAuthorWithNewBook
+void InsertNewAuthorWithNewBook()
+{
+    PubContext pubContext = new PubContext();
+    var author = new Author { FirstName = "Isidoro", LastName = "Rugal" };
+    author.Books.Add(new Book
+    {
+        Title = "Sql for begin",
+        PublishDate = new DateTime(2020, 2, 1),
+    });
+    pubContext.Authors.Add(author);
+    pubContext.SaveChanges();
+
+}
 
 //Insertar autores con List
 
