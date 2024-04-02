@@ -16,6 +16,7 @@ namespace EfCore6Fundaments.Domian
         //propiedad de navegacion  y la relacion de muchos libros a un author 
         public  Author Author { get; set; }
         public int AuthorId { get; set; }
+          
 
         //constructor 
         public override string ToString()
