@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EfCore6Fundaments.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,9 @@ namespace EfCore6Fundaments.Domian
         //propiedad de navegacion  y la relacion de muchos libros a un author 
         public  Author Author { get; set; }
         public int AuthorId { get; set; }
+
+        //relacion de one a one tomando en cuenta que el hijo es cover 
+        public Cover Cover { get; set; }
           
 
         //constructor 

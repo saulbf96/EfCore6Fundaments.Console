@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EfCore6Fundaments.Domain", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EfCore6Fundaments.Data", "EfCore6Fundaments.Data\EfCore6Fundaments.Data.csproj", "{F3436674-09AD-4386-A882-899972D3167E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubAPI", "PubAPI\PubAPI.csproj", "{F88D9566-B6D4-4AE2-84A4-61CA1F8A9AA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F3436674-09AD-4386-A882-899972D3167E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3436674-09AD-4386-A882-899972D3167E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3436674-09AD-4386-A882-899972D3167E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F88D9566-B6D4-4AE2-84A4-61CA1F8A9AA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F88D9566-B6D4-4AE2-84A4-61CA1F8A9AA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F88D9566-B6D4-4AE2-84A4-61CA1F8A9AA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F88D9566-B6D4-4AE2-84A4-61CA1F8A9AA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

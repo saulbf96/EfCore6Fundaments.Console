@@ -4,6 +4,7 @@ using EfCore6Fundaments.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EfCore6Fundaments.Data.Migrations
 {
     [DbContext(typeof(PubContext))]
-    partial class PubContextModelSnapshot : ModelSnapshot
+    [Migration("20240403174439_AddArtistonly")]
+    partial class AddArtistonly
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.28")
+                .HasAnnotation("ProductVersion", "6.0.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -61,33 +63,9 @@ namespace EfCore6Fundaments.Data.Migrations
                         new
                         {
                             ArtistId = 1,
-                            FirstName = "Pablo",
-                            LastName = "Picasso"
-                        },
-                        new
-                        {
-                            ArtistId = 2,
-                            FirstName = "Dee",
-                            LastName = "Bell"
-                        },
-                        new
-                        {
-                            ArtistId = 3,
-                            FirstName = "Katharine",
-                            LastName = "Kuharic"
+                            FirstName = "Pausini",
+                            LastName = "Pique"
                         });
-                });
-
-            modelBuilder.Entity("EfCore6Fundaments.Domain.AuthorByArtist", b =>
-                {
-                    b.Property<string>("Artist")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Author")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToView("AuthorsByArtist");
                 });
 
             modelBuilder.Entity("EfCore6Fundaments.Domain.Cover", b =>
@@ -98,9 +76,6 @@ namespace EfCore6Fundaments.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CoverId"), 1L, 1);
 
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
                     b.Property<string>("DesignIdeas")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -110,33 +85,7 @@ namespace EfCore6Fundaments.Data.Migrations
 
                     b.HasKey("CoverId");
 
-                    b.HasIndex("BookId")
-                        .IsUnique();
-
                     b.ToTable("Covers");
-
-                    b.HasData(
-                        new
-                        {
-                            CoverId = 1,
-                            BookId = 3,
-                            DesignIdeas = "How about a left hand in the dark?",
-                            DigitalOnly = false
-                        },
-                        new
-                        {
-                            CoverId = 2,
-                            BookId = 2,
-                            DesignIdeas = "Should we put a clock?",
-                            DigitalOnly = true
-                        },
-                        new
-                        {
-                            CoverId = 3,
-                            BookId = 1,
-                            DesignIdeas = "A big ear in the clouds?",
-                            DigitalOnly = false
-                        });
                 });
 
             modelBuilder.Entity("EfCore6Fundaments.Domian.Author", b =>
@@ -158,44 +107,6 @@ namespace EfCore6Fundaments.Data.Migrations
                     b.HasKey("AuthorId");
 
                     b.ToTable("Authors");
-
-                    b.HasData(
-                        new
-                        {
-                            AuthorId = 1,
-                            FirstName = "Rhoda",
-                            LastName = "Lerman"
-                        },
-                        new
-                        {
-                            AuthorId = 2,
-                            FirstName = "Ruth",
-                            LastName = "Ozeki"
-                        },
-                        new
-                        {
-                            AuthorId = 3,
-                            FirstName = "Sofia",
-                            LastName = "Segovia"
-                        },
-                        new
-                        {
-                            AuthorId = 4,
-                            FirstName = "Ursula K.",
-                            LastName = "LeGuin"
-                        },
-                        new
-                        {
-                            AuthorId = 5,
-                            FirstName = "Hugh",
-                            LastName = "Howey"
-                        },
-                        new
-                        {
-                            AuthorId = 6,
-                            FirstName = "Isabelle",
-                            LastName = "Allende"
-                        });
                 });
 
             modelBuilder.Entity("EfCore6Fundaments.Domian.Book", b =>
@@ -223,32 +134,6 @@ namespace EfCore6Fundaments.Data.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("Books");
-
-                    b.HasData(
-                        new
-                        {
-                            BookId = 1,
-                            AuthorId = 1,
-                            BasePrice = 0m,
-                            PublishDate = new DateTime(1989, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "In God's Ear"
-                        },
-                        new
-                        {
-                            BookId = 2,
-                            AuthorId = 2,
-                            BasePrice = 0m,
-                            PublishDate = new DateTime(2013, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "A Tale For the Time Being"
-                        },
-                        new
-                        {
-                            BookId = 3,
-                            AuthorId = 3,
-                            BasePrice = 0m,
-                            PublishDate = new DateTime(1969, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "The Left Hand of Darkness"
-                        });
                 });
 
             modelBuilder.Entity("ArtistCover", b =>
@@ -266,17 +151,6 @@ namespace EfCore6Fundaments.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EfCore6Fundaments.Domain.Cover", b =>
-                {
-                    b.HasOne("EfCore6Fundaments.Domian.Book", "Book")
-                        .WithOne("Cover")
-                        .HasForeignKey("EfCore6Fundaments.Domain.Cover", "BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-                });
-
             modelBuilder.Entity("EfCore6Fundaments.Domian.Book", b =>
                 {
                     b.HasOne("EfCore6Fundaments.Domian.Author", "Author")
@@ -291,12 +165,6 @@ namespace EfCore6Fundaments.Data.Migrations
             modelBuilder.Entity("EfCore6Fundaments.Domian.Author", b =>
                 {
                     b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("EfCore6Fundaments.Domian.Book", b =>
-                {
-                    b.Navigation("Cover")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
